@@ -118,5 +118,11 @@ services:
       RABBITMQ_PORT: 5672
       RABBITMQ_USERNAME: rabbitmq
       RABBITMQ_PASSWORD: rabbitmq
+
+  flebie-frontend-service:
+    container_name: flebie-frontend-service
+    image: flebie-frontend:latest
+    ports:
+      - 3000:3000
  
   
