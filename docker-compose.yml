@@ -7,6 +7,8 @@ volumes:
     mysql_bkp_visitdb:
     mysql_bkp_clientdb:
     mysql_bkp_availabilitydb:
+    mysql_bkp_accountdb:
+    #mysql_bkp_clientlookupdb:
 
 services:
   lab_test_db:
@@ -64,6 +66,24 @@ services:
     environment:
       MYSQL_DATABASE: clientdb_master
       MYSQL_ROOT_PASSWORD: password
+
+  account_db:
+    container_name: account_mysql_db
+    image: mysql:5.6
+    volumes:
+      - mysql_bkp_accountdb:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: accountdb_master
+      MYSQL_ROOT_PASSWORD: password
+
+  # clientlookup_db:
+  #   container_name: clientlookup_mysql_db
+  #   image: mysql:5.6
+  #   volumes:
+  #     - mysql_bkp_clientlookupdb:/var/lib/mysql
+  #   environment:
+  #     MYSQL_DATABASE: clientlookupdb_master
+  #     MYSQL_ROOT_PASSWORD: password
 
   rabbitmq-container:
     container_name: rabbitmq-container
@@ -181,6 +201,30 @@ services:
       SERVICE_URL_DEFAULT_ZONE: http://flebie-eureka-naming-server:8761/eureka
       DBHOST: client_db
       
+  flebie-account-management-service:
+    container_name: flebie-account-management-service
+    image: flebie-account-management-service:latest
+    restart: on-failure
+    ports:
+      - 9510:9510
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
+      KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
+      SERVICE_URL_DEFAULT_ZONE: http://flebie-eureka-naming-server:8761/eureka
+      DBHOST: account_db
+
+  # flebie-client-notification-service:
+  #   container_name: flebie-client-notification-service
+  #   image: flebie-client-notification-service:latest
+  #   restart: on-failure
+  #   ports:
+  #     - 9050:9050
+  #   environment:
+  #     SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
+  #     KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
+  #     SERVICE_URL_DEFAULT_ZONE: http://flebie-eureka-naming-server:8761/eureka
+  #     DBHOST: clientlookup_db
+
   # flebie-frontend-service:
   #   container_name: flebie-frontend-service
   #   image: flebie-frontend:latest
