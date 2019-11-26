@@ -17,7 +17,7 @@ services:
     volumes:
       - mysql_bkp_labtestdb:/var/lib/mysql
     ports:
-      - 33060:33060
+      - 33060:3306
     environment:
       MYSQL_DATABASE: flebiedb_flebie
       MYSQL_ROOT_PASSWORD: password
@@ -39,7 +39,7 @@ services:
     volumes:
       - mysql_bkp_orderdb:/var/lib/mysql
     ports:
-      - 33061:33061
+      - 33061:3306
     environment:
       MYSQL_DATABASE: orderdb_flebie
       MYSQL_ROOT_PASSWORD: password
@@ -50,7 +50,7 @@ services:
     volumes:
       - mysql_bkp_visitdb:/var/lib/mysql
     ports:
-      - 33062:33062
+      - 33062:3306
     environment:
       MYSQL_DATABASE: visitdb
       MYSQL_ROOT_PASSWORD: password
@@ -61,7 +61,7 @@ services:
     volumes:
       - mysql_bkp_availabilitydb:/var/lib/mysql
     ports:
-      - 33066:33066
+      - 33066:3306
     environment:
       MYSQL_DATABASE: availabilitydb_flebie
       MYSQL_ROOT_PASSWORD: password
@@ -72,7 +72,7 @@ services:
     volumes:
       - mysql_bkp_clientdb:/var/lib/mysql
     ports:
-      - 33064:33064
+      - 33064:3306
     environment:
       MYSQL_DATABASE: clientdb_flebie
       MYSQL_ROOT_PASSWORD: password
@@ -83,7 +83,7 @@ services:
     volumes:
       - mysql_bkp_accountdb:/var/lib/mysql
     ports:
-      - 33063:33063
+      - 33063:3306
     environment:
       MYSQL_DATABASE: accountdb_flebie
       MYSQL_ROOT_PASSWORD: password
@@ -94,7 +94,7 @@ services:
     volumes:
       - mysql_bkp_clientlookupdb:/var/lib/mysql
     ports:
-      - 33065:33065
+      - 33065:3306
     environment:
       MYSQL_DATABASE: clientlookupdb
       MYSQL_ROOT_PASSWORD: password
@@ -190,7 +190,7 @@ services:
       SPRING_RABBITMQ_PASSWORD: rabbitmq
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: password
-      SPRING_DATASOURCE_URL: jdbc:mysql://order_fulflmnt_db:33062/visitdb?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://order_fulflmnt_db:3306/visitdb?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
 
   flebie-availability-service:
@@ -245,7 +245,7 @@ services:
       SPRING_RABBITMQ_PASSWORD: rabbitmq
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: password
-      SPRING_DATASOURCE_URL: jdbc:mysql://clientlookup_db:33065/clientlookupdb?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://clientlookup_db:3306/clientlookupdb?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
 
   flebie-frontend-service:
