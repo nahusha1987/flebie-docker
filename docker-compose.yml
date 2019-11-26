@@ -16,8 +16,10 @@ services:
     image: mysql:5.6
     volumes:
       - mysql_bkp_labtestdb:/var/lib/mysql
+    ports:
+      - 33060:33060
     environment:
-      MYSQL_DATABASE: flebiedb_master
+      MYSQL_DATABASE: flebiedb_flebie
       MYSQL_ROOT_PASSWORD: password
     
   keycloak_db:
@@ -36,8 +38,10 @@ services:
     image: mysql:5.6
     volumes:
       - mysql_bkp_orderdb:/var/lib/mysql
+    ports:
+      - 33061:33061
     environment:
-      MYSQL_DATABASE: orderdb_master
+      MYSQL_DATABASE: orderdb_flebie
       MYSQL_ROOT_PASSWORD: password
 
   order_fulflmnt_db:
@@ -45,6 +49,8 @@ services:
     image: mysql:5.6
     volumes:
       - mysql_bkp_visitdb:/var/lib/mysql
+    ports:
+      - 33062:33062
     environment:
       MYSQL_DATABASE: visitdb
       MYSQL_ROOT_PASSWORD: password
@@ -54,8 +60,10 @@ services:
     image: mysql:5.6
     volumes:
       - mysql_bkp_availabilitydb:/var/lib/mysql
+    ports:
+      - 33066:33066
     environment:
-      MYSQL_DATABASE: availabilitydb_master
+      MYSQL_DATABASE: availabilitydb_flebie
       MYSQL_ROOT_PASSWORD: password
 
   client_db:
@@ -63,8 +71,10 @@ services:
     image: mysql:5.6
     volumes:
       - mysql_bkp_clientdb:/var/lib/mysql
+    ports:
+      - 33064:33064
     environment:
-      MYSQL_DATABASE: clientdb_master
+      MYSQL_DATABASE: clientdb_flebie
       MYSQL_ROOT_PASSWORD: password
 
   account_db:
@@ -72,8 +82,10 @@ services:
     image: mysql:5.6
     volumes:
       - mysql_bkp_accountdb:/var/lib/mysql
+    ports:
+      - 33063:33063
     environment:
-      MYSQL_DATABASE: accountdb_master
+      MYSQL_DATABASE: accountdb_flebie
       MYSQL_ROOT_PASSWORD: password
 
   clientlookup_db:
@@ -81,6 +93,8 @@ services:
     image: mysql:5.6
     volumes:
       - mysql_bkp_clientlookupdb:/var/lib/mysql
+    ports:
+      - 33065:33065
     environment:
       MYSQL_DATABASE: clientlookupdb
       MYSQL_ROOT_PASSWORD: password
@@ -132,7 +146,7 @@ services:
     container_name: flebie-lab-test-service
     image: flebie-lab-test-service:latest
     ports:
-      - 8980:8980
+      - 9000:9000
     restart: always
     environment:
       SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
@@ -149,7 +163,7 @@ services:
     image: flebie-order-management-service:latest
     restart: on-failure
     ports:
-      - 9080:9080
+      - 9001:9001
     environment:
       SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
       KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
@@ -165,7 +179,7 @@ services:
     image: flebie-order-fulfillment-service:latest
     restart: on-failure
     ports: 
-      - 9280:9280
+      - 9002:9002
     environment:
       SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
       KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
@@ -176,7 +190,7 @@ services:
       SPRING_RABBITMQ_PASSWORD: rabbitmq
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: password
-      SPRING_DATASOURCE_URL: jdbc:mysql://order_fulflmnt_db:3306/visitdb
+      SPRING_DATASOURCE_URL: jdbc:mysql://order_fulflmnt_db:33062/visitdb?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
 
   flebie-availability-service:
@@ -184,7 +198,7 @@ services:
     image: flebie-availability-service:latest
     restart: on-failure
     ports:
-      - 9290:9290
+      - 9006:9006
     environment:
       SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
       KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
@@ -196,7 +210,7 @@ services:
     image: flebie-client-management-service:latest
     restart: on-failure
     ports:
-      - 9490:9490
+      - 9004:9004
     environment:
       SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
       KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
@@ -208,7 +222,7 @@ services:
     image: flebie-account-management-service:latest
     restart: on-failure
     ports:
-      - 9510:9510
+      - 9003:9003
     environment:
       SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
       KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
@@ -220,7 +234,7 @@ services:
     image: flebie-client-notification-service:latest
     restart: on-failure
     ports:
-      - 9050:9050
+      - 9005:9005
     environment:
       SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
       KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
@@ -231,7 +245,7 @@ services:
       SPRING_RABBITMQ_PASSWORD: rabbitmq
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: password
-      SPRING_DATASOURCE_URL: jdbc:mysql://clientlookup_db:3306/clientlookupdb
+      SPRING_DATASOURCE_URL: jdbc:mysql://clientlookup_db:33065/clientlookupdb?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
 
   flebie-frontend-service:
