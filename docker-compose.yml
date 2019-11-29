@@ -27,6 +27,8 @@ services:
     image: mysql:5.6
     volumes:
       - mysql_bkp_keycloakdb:/var/lib/mysql
+    ports:
+      - 3333:3306
     environment:
       MYSQL_DATABASE: keycloakdb
       MYSQL_ROOT_PASSWORD: password
@@ -125,6 +127,7 @@ services:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
       KEYCLOAK_LOGLEVEL: DEBUG
+      ROOT_LOGLEVEL: DEBUG
     depends_on:
        - keycloak_db
     ports:
@@ -150,7 +153,8 @@ services:
     restart: always
     environment:
       SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
-      KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
+      KEYCLOAK_AUTH_SERVER_URL: ${EXTERNAL_IP}
+      #KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
       SERVICE_URL_DEFAULT_ZONE: http://flebie-eureka-naming-server:8761/eureka
       SPRING_RABBITMQ_HOST: rabbitmq-container
       SPRING_RABBITMQ_PORT: 5672
@@ -166,7 +170,8 @@ services:
       - 9001:9001
     environment:
       SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
-      KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
+      KEYCLOAK_AUTH_SERVER_URL: ${EXTERNAL_IP}
+      #KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
       SERVICE_URL_DEFAULT_ZONE: http://flebie-eureka-naming-server:8761/eureka
       SPRING_RABBITMQ_HOST: rabbitmq-container
       SPRING_RABBITMQ_PORT: 5672
@@ -182,7 +187,8 @@ services:
       - 9002:9002
     environment:
       SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
-      KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
+      KEYCLOAK_AUTH_SERVER_URL: ${EXTERNAL_IP}
+      #KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
       SERVICE_URL_DEFAULT_ZONE: http://flebie-eureka-naming-server:8761/eureka
       SPRING_RABBITMQ_HOST: rabbitmq-container
       SPRING_RABBITMQ_PORT: 5672
@@ -201,7 +207,8 @@ services:
       - 9006:9006
     environment:
       SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
-      KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
+      KEYCLOAK_AUTH_SERVER_URL: ${EXTERNAL_IP}
+      #KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
       SERVICE_URL_DEFAULT_ZONE: http://flebie-eureka-naming-server:8761/eureka
       DBHOST: availability_db
 
@@ -213,7 +220,8 @@ services:
       - 9004:9004
     environment:
       SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
-      KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
+      KEYCLOAK_AUTH_SERVER_URL: ${EXTERNAL_IP}
+      #KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
       SERVICE_URL_DEFAULT_ZONE: http://flebie-eureka-naming-server:8761/eureka
       DBHOST: client_db
       
@@ -223,9 +231,11 @@ services:
     restart: on-failure
     ports:
       - 9003:9003
+      - 7003:7003
     environment:
       SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
-      KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
+      KEYCLOAK_AUTH_SERVER_URL: ${EXTERNAL_IP}
+      #KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
       SERVICE_URL_DEFAULT_ZONE: http://flebie-eureka-naming-server:8761/eureka
       DBHOST: account_db
 
@@ -237,7 +247,8 @@ services:
       - 9005:9005
     environment:
       SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
-      KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
+      KEYCLOAK_AUTH_SERVER_URL: ${EXTERNAL_IP}
+      #KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
       SERVICE_URL_DEFAULT_ZONE: http://flebie-eureka-naming-server:8761/eureka
       SPRING_RABBITMQ_HOST: rabbitmq-container
       SPRING_RABBITMQ_PORT: 5672
