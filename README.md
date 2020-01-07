@@ -26,11 +26,11 @@ Execute the following commands :<br/>
 5. ./startup.sh<br/>
 ### To restart only specific application
 1. Find container ID by running docker ps
-2. docker stop <container-id>
-3. docker rm <container-id>
+2. docker stop "container-id"
+3. docker rm "container-id"
 4. Find image ID by running docker images
-5. docker rmi <image-id>
+5. docker rmi "image-id"
 6. Build image by running mvn clean install
 7. set EXTERNAL_IP by running export EXTERNAL_IP="$(hostname -I | awk '{print $1}')"
-8. docker-compose up <service name of application>
+8. docker-compose up "service name of application"
 #### P.S: Service name is the name under which the application details are defined in the docker-compose.yml
