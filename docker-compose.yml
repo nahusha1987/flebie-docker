@@ -270,3 +270,18 @@ services:
     image: flebie-frontend:latest
     ports:
       - 3000:3000
+
+  flebie-external-notification-service: 
+    conatiner_name: flebie-external-notification-service
+    image: flebie-external-notification-service:latest
+    restart: on-failure
+    ports: 
+      - 9007:9007
+      - 7007:7007
+    environment: 
+      SPRING_CLOUD_CONFIG_URI: http://flebie-config-server:8888
+      SERVICE_URL_DEFAULT_ZONE: http://flebie-eureka-naming-server:8761/eureka
+      SPRING_RABBITMQ_HOST: rabbitmq-container
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: rabbitmq
+      SPRING_RABBITMQ_PASSWORD: rabbitmq
