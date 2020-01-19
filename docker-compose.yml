@@ -272,7 +272,7 @@ services:
       - 3000:3000
 
   flebie-external-notification-service: 
-    conatiner_name: flebie-external-notification-service
+    container_name: flebie-external-notification-service
     image: flebie-external-notification-service:latest
     restart: on-failure
     ports: 
